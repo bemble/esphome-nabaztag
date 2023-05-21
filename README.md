@@ -21,7 +21,7 @@ substitutions:
   wifi_ap_password: ap_password
 
 packages:
-  raspiaudio.muse-luxe: github://bemble/esphome-nabaztag/violet.nabaztag-tag.yaml@main
+  violet.nabaztag-tag: github://bemble/esphome-nabaztag/violet.nabaztag-tag.yaml@main
 
 esphome:
 ```
