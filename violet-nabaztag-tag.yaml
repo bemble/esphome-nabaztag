@@ -1,0 +1,97 @@
+substitutions:
+  name: "violet-nabaztag-tag"
+  friendly_name: "Violet Nabaztag Tag"
+  wifi_ap_password: ""
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  project:
+    name: violet.nabaztag-tag
+    version: "1.0"
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+logger:
+api:
+ota:
+
+dashboard_import:
+  package_import_url: github://bemble/esphome-nabaztag/violet.nabaztag-tag.yaml@main
+
+wifi:
+  ap:
+    password: "${wifi_ap_password}"
+
+captive_portal:
+
+improv_serial:
+
+i2s_audio:
+  - id: i2s_out
+    i2s_lrclk_pin: GPIO18
+    i2s_bclk_pin: GPIO19
+  - id: i2s_in
+    i2s_lrclk_pin: GPIO27 #ws
+    i2s_bclk_pin: GPIO14 #clk
+
+speaker:
+  - platform: i2s_audio
+    id: max98357_speaker
+    dac_type: external
+    i2s_audio_id: i2s_out
+    i2s_dout_pin: GPIO21
+    mode: mono
+
+media_player:
+  - platform: i2s_audio
+    name: None
+    dac_type: external
+    i2s_audio_id: i2s_out
+    i2s_dout_pin: GPIO21
+    mode: mono
+
+microphone:
+  - platform: i2s_audio
+    i2s_audio_id: i2s_in
+    i2s_din_pin: GPIO26 #sd
+    id: inmp441_mic
+    adc_type: external
+    pdm: false
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Head button"
+    on_press:
+      - voice_assistant.start:
+    on_release:
+      - voice_assistant.stop:
+ 
+switch:
+  - platform: gpio
+    name: "Left ear"
+    id: "left_ear"
+    pin: GPIO22
+
+voice_assistant:
+  microphone: inmp441_mic
+  speaker: max98357_speaker
+  on_tts_end:
+    - switch.turn_on: left_ear
+    - delay: 3000ms
+    - switch.turn_off: left_ear
+  on_error:
+    - switch.turn_on: left_ear
+    - delay: 1500ms
+    - switch.turn_off: left_ear
+    - delay: 500ms
+    - switch.turn_on: left_ear
+    - delay: 1500ms
+    - switch.turn_off: left_ear
