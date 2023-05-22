@@ -21,7 +21,7 @@ substitutions:
   wifi_ap_password: ap_password
 
 packages:
-  violet.nabaztag-tag: github://bemble/esphome-nabaztag/violet.nabaztag-tag.yaml@main
+  violet.nabaztag-tag: github://bemble/esphome-nabaztag/violet-nabaztag-tag.yaml@main
 
 esphome:
 ```
@@ -36,7 +36,7 @@ esphome:
 - [ ] use the wheel to manager leds max brightness (or something else, to be defined)
 - [ ] make a PCB (⚠️ Nabaztag and Karotz have different connectors)
 
-## Ressources
+## Resources
 
 - [Hack the Nabaztag](https://www.instructables.com/Hack-the-Nabaztag/)
 - [Tagtagtag ears encoder](https://github.com/pguyot/tagtagtag-ears)
